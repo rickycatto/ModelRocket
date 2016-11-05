@@ -1,0 +1,24 @@
+#define firePin D7                        //connect 2n transistor to digital pin 7
+bool toggle = false;
+
+int fireToggle(String command){
+    toggle = true;
+    return 0;
+}
+
+void setup() {
+    pinMode(firePin, OUTPUT);
+    Particle.function("ToggleFire", fireToggle);
+}
+
+void loop() {
+    System.sleep(SLEEP_MODE_CPU);        //low power mode
+    if(toggle == true){                  //turn on transistor gate
+        digitalWrite(firePin, HIGH);
+        delay(4000);                     //set how long the pin needs to be active
+        digitalWrite(firePin, LOW);      //turn off transistor gate
+        toggle = false;
+    }
+}
+
+
